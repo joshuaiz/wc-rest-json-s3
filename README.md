@@ -26,6 +26,7 @@ $request = new WP_REST_Request( 'GET', '/wc/v2/products' );
 ```
 
 **Edit your REST API query parameters:**
+Note that the parameters for a REST API call are different than `WP_QUERY` arguments.
 ```php
 $request->set_query_params(
 
