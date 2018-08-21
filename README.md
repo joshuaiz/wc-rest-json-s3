@@ -10,6 +10,10 @@ Nothing I tried to lessen the load times was working for me so why not load a js
 
 The plugin includes an updated version of the fantastic `S3.php` class from Donovan Schönknecht which uses the v4 authentication method. For reference, that is found here: https://github.com/racklin/amazon-s3-php-class
 
+By hooking into the `save_post_product` action, the file is updated every time a `product` post is saved/updated. 
+
+For other endpoints like posts and pages, you could hook into the `save_post` action.
+
 ### Installation
 Install like any other WordPress plugin. Or copy the main function to the `functions.php` file of your active theme. 
 
