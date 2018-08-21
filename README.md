@@ -13,12 +13,12 @@ The plugin includes an updated version of the fantastic `S3.php` class from Dono
 ### Installation
 Install like any other WordPress plugin. Or copy the main function to the `functions.php` file of your active theme. 
 
-If you need multiple endpoints written to json, duplicate the functions and change the function names and parameters
+If you need multiple endpoints written to json, duplicate the functions and change the function names and parameters for your needs.
 
-### What to edit
+## What to edit in the plugin file
 You will need to edit the following bits in order for this to work for your setup:
 
-#### In `rest_api_products_to_json()`:
+### In `rest_api_products_to_json()`:
 
 **Edit your endpoint:**
 ```php
@@ -42,12 +42,13 @@ $request->set_query_params(
 $path = get_template_directory() . '/path/to/file/';
 ```
 
-**Edit your file name:**
+**Edit your file name (optional):**
 ```php
 $file_name = 'wc_products' . '.json';
 ```
+---
 
-#### In `upload_json_to_s3()`:
+### In `upload_json_to_s3()`:
 
 **Edit the json file path/location:**
 ```php
@@ -70,13 +71,18 @@ S3::putObject(S3::inputFile($file), AWS_S3_BUCKET, 'path/in/bucket/' . $file, S3
 
 Depending on your file paths and S3 bucket, once the file is uploaded, grab the url from Amazon S3 for your file and then use that in your API call. It *should* be much faster than a regular WP REST API call.
 
-
+---
 **Notes:** 
 
 You can certainly reconfigure it to work with any REST API endpoint: posts, pages, menus, or custom post types by just changing the request endpoint and query parameters in the `wc-rest-json-s3.php` file.
 
+---
+
 **Important:**
+
 Use at your own risk. Internal calls to the REST API **bypass authentication** so be aware of this if you use it on a client site. Also, this uploads the file to be **publicly** read from S3 so do not include any sensitive data.
+
+---
 
 **Resources:**
 
