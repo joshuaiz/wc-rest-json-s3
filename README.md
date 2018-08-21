@@ -1,4 +1,4 @@
-# ❀ WC REST JSON to S3
+#  ⚡ WC REST JSON to S3
 This is a simple plugin that writes the WooCommerce products REST API endpoint response to a JSON file. Then, it uploads that file to Amazon S3. 
 
 ### Why would you need this?
@@ -15,8 +15,12 @@ Install like any other WordPress plugin. Or copy the main function to the `funct
 
 If you need multiple endpoints written to json, duplicate the functions and change the function names and parameters for your needs.
 
+<br />
+
 ## What to edit in the plugin file
 You will need to edit the following bits in order for this to work for your setup:
+
+<br />
 
 ### In `rest_api_products_to_json()`:
 
@@ -24,6 +28,8 @@ You will need to edit the following bits in order for this to work for your setu
 ```php
 $request = new WP_REST_Request( 'GET', '/wc/v2/products' );
 ```
+
+<br />
 
 **Edit your REST API query parameters:**
 
@@ -38,24 +44,34 @@ $request->set_query_params(
 
 );
 ```
+<br />
 
 **Edit your file path (where you want your json file to be written to):**
 ```php
 $path = get_template_directory() . '/path/to/file/';
 ```
 
+<br />
+
 **Edit your file name (optional):**
 ```php
 $file_name = 'wc_products' . '.json';
 ```
+
+<br />
+
 ---
 
 ### In `upload_json_to_s3()`:
+
+<br />
 
 **Edit the json file path/location:**
 ```php
 $file = get_template_directory() . '/path/to/file/wc_products.json';
 ```
+
+<br />
 
 **Edit your S3 information:**
 ```php
@@ -65,24 +81,33 @@ define('AWS_S3_REGION', 'us-east-2');
 define('AWS_S3_BUCKET', 'yourbucket');
 define('AWS_S3_URL', 'https://s3.'.AWS_S3_REGION.'.amazonaws.com/'.AWS_S3_BUCKET.'/');
 ```
+<br />
 
 **Edit your bucket path:**
 ```php
 S3::putObject(S3::inputFile($file), AWS_S3_BUCKET, 'path/in/bucket/' . $file, S3::ACL_PUBLIC_READ);
 ```
 
+<br />
+
 Depending on your file paths and S3 bucket, once the file is uploaded, grab the url from Amazon S3 for your file and then use that in your API call. It *should* be much faster than a regular WP REST API call.
+
+<br />
 
 ---
 **Notes:** 
 
 You can certainly reconfigure it to work with any REST API endpoint: posts, pages, menus, or custom post types by just changing the request endpoint and query parameters in the `wc-rest-json-s3.php` file.
 
+<br />
+
 ---
 
 **Important:**
 
 Use at your own risk. Internal calls to the REST API **bypass authentication** so be aware of this if you use it on a client site. Also, this uploads the file to be **publicly** read from S3 so do not include any sensitive data.
+
+<br />
 
 ---
 
