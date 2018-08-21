@@ -22,3 +22,9 @@ You will need to edit this file anyway to add your Amazon S3 keys, bucket names 
 
 Use at your own risk. Internal calls to the REST API **bypass authentication** so be aware of this if you use it on a client site. Also, this uploads the file to be **publicly** read from S3 so do not include any sensitive data.
 
+Resources:
+
+https://wpscholar.com/blog/internal-wp-rest-api-calls/
+
+https://medium.com/@martindrapeau/simple-php-code-to-push-files-to-aws-s3-3396f9b3d02a
+
