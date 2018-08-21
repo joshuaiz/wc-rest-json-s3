@@ -22,6 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 
     // Hook into save_post_product so every time we save or update, a new file is written
+    // change to add_action('save_post' ...) for regular posts or pages
     add_action( 'save_post_product', 'rest_api_products_to_json', 10, 4 );
 
     // Write WooCommerce products to json file
@@ -29,6 +30,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
         // make GET request to the WC REST API products endpoint
         // see here: https://wpscholar.com/blog/internal-wp-rest-api-calls/
+        // change second argument to your desired endpoint
         $request = new WP_REST_Request( 'GET', '/wc/v2/products' );
 
         // adjust your query parameters as necessary
@@ -49,6 +51,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
     
         // change $path to wherever you want the file written to in your theme (or elsewhere)
         $path = get_template_directory() . '/path/to/file/';
+
+        // you can name the file whatever you want
         $file_name = 'wc_products' . '.json';
         
         // write the file
@@ -62,10 +66,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
     // upload file to Amazon s3
     function upload_json_to_s3() {
 
-        $file = get_template_directory() . '/library/docs/vizual_products.json';
+        $file = get_template_directory() . '/path/to/file/wc_products.json';
     
         define('AWS_S3_KEY', 'YOUR_S3_KEY');
         define('AWS_S3_SECRET', 'YOUR_S3_SECRET_KEY');
+        // change to your preferred s3 region
         define('AWS_S3_REGION', 'us-east-2');
         define('AWS_S3_BUCKET', 'yourbucket');
         define('AWS_S3_URL', 'https://s3.'.AWS_S3_REGION.'.amazonaws.com/'.AWS_S3_BUCKET.'/');
@@ -83,10 +88,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
     }
 
 } else {
+    // delete this if you are using this for other endpoints
     add_action( 'admin_notices', 'WCRJS3_woocommerce_notice' );
 }
 
-
+// delete this if you are using non-woocommerce endpoints
 function WCRJS3_woocommerce_notice() { ?>
 
     <div class="error notice">
