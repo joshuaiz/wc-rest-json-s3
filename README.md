@@ -1,4 +1,4 @@
-# WC REST JSON to S3
+# ❀ WC REST JSON to S3
 This is a simple plugin that writes the WooCommerce products REST API endpoint response to a JSON file. Then, it uploads that file to Amazon S3. 
 
 ### Why would you need this?
