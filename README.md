@@ -14,9 +14,11 @@ The plugin includes an updated version of the fantastic `S3.php` class from Dono
 
 Install like any other WordPress plugin.
 
+Depending on your file paths and S3 bucket, once the file is uploaded, grab the url from Amazon S3 for your file and then use that in your API call. 
+
 You can certainly reconfigure it to work with any REST API endpoint: posts, pages, menus, or custom post types by just changing the request endpoint and query parameters in the `wc-rest-json-s3.php` file.
 
 You will need to edit this file anyway to add your Amazon S3 keys, bucket names and specify the path for your `.json` file.
 
-Use at your own risk. Internal calls to the REST API **bypass authentication** so be aware of this if you use it on a client site.
+Use at your own risk. Internal calls to the REST API **bypass authentication** so be aware of this if you use it on a client site. Also, this uploads the file to be **publicly** read from S3 so do not include any sensitive data.
 
