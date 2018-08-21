@@ -5,7 +5,7 @@
  * Description: Write WooCommerce REST API endpoint response data to JSON then upload to s3. File is updated on post (product) save.
  * Author: Joshua Michaels for studio.bio
  * Author URI: https://studio.bio
- * Version: 1.0.0
+ * Version: 1.0.1
  * License: GPL2+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-// Check if WooCommerce is active
+// Check if WooCommerce is active; delete this conditional if using other endpoints
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 
     // Hook into save_post_product so every time we save or update, a new file is written
@@ -66,8 +66,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
     // upload file to Amazon s3
     function upload_json_to_s3() {
 
+        // change to your file path
         $file = get_template_directory() . '/path/to/file/wc_products.json';
     
+        // simple upload to S3
+        // adapted from: https://medium.com/@martindrapeau/simple-php-code-to-push-files-to-aws-s3-3396f9b3d02a
         define('AWS_S3_KEY', 'YOUR_S3_KEY');
         define('AWS_S3_SECRET', 'YOUR_S3_SECRET_KEY');
         // change to your preferred s3 region
@@ -77,12 +80,15 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
     
         if (defined('AWS_S3_URL')) {
 
+            // require the S3 class
             require_once('S3.php');
 
             S3::setAuth(AWS_S3_KEY, AWS_S3_SECRET);
             S3::setRegion(AWS_S3_REGION);
             S3::setSignatureVersion('v4');
-            S3::putObject(S3::inputFile($file), AWS_S3_BUCKET, 'path/in/bucket/'.$file, S3::ACL_PUBLIC_READ);
+
+            // change your path in bucket if necessary
+            S3::putObject(S3::inputFile($file), AWS_S3_BUCKET, 'path/in/bucket/' . $file, S3::ACL_PUBLIC_READ);
 
         }
     }
